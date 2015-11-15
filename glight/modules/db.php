@@ -260,10 +260,9 @@ class db
 				case "by_persona":
 					$this->escape_string($data);
 					$persona=$data['persona'];
-					$info=$this->get_data("SELECT * FROM interes WHERE persona=$persona;");
+					$info=$this->get_data("SELECT * FROM interes WHERE persona='$persona';");
 				break;
 			}
-
 
 			case "encuesta":
 			switch ($option['lvl2']) {

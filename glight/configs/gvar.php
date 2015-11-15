@@ -18,7 +18,7 @@ $gvar=array();
 //messages
 
 //links and names
-$gvar['l_global'] = "http://localhost/glight/";
+$gvar['l_global'] = "http://localhost/encuestando/glight/";
 $gvar['n_global'] = "Framework G";
 
 $gvar['n_login'] = "Login";
