@@ -1,7 +1,14 @@
 <form id="search-form" action="{$gvar.l_global}c_buscar_encuesta.php?option=buscar" method="post">
 
-		<input type="text" name="nombre" {if isset($object)} value="{$object->nombre}" {/if} autocomplete="off" required/>
+		<input type="text" name="consulta" {if isset($object)} value="{$object->consulta}" {/if} autocomplete="off" required/>
 		<input type="submit" value="Buscar"/>
+		{if isset($object->consulta)}
+			{if ($encuestas|@sizeof==0)}
+				<label>No se encontraron resultados...</label>
+			{/if}
+		{else}
+			<label>Encuestas que te podrían interesar...</label>
+		{/if}
 		
 	<center>
 		<table width="100%">

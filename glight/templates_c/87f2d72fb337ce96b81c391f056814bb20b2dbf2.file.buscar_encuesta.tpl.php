@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.9, created on 2015-11-15 15:33:12
+<?php /* Smarty version Smarty-3.0.9, created on 2015-11-15 16:43:58
          compiled from "C:/wamp/www/encuestando/glight/templates\buscar_encuesta.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:15146564897a86e5b83-44646187%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:41975648a83e2ea141-73324239%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '87f2d72fb337ce96b81c391f056814bb20b2dbf2' => 
     array (
       0 => 'C:/wamp/www/encuestando/glight/templates\\buscar_encuesta.tpl',
-      1 => 1447597564,
+      1 => 1447602235,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15146564897a86e5b83-44646187',
+  'nocache_hash' => '41975648a83e2ea141-73324239',
   'function' => 
   array (
   ),
@@ -20,9 +20,16 @@ $_smarty_tpl->decodeProperties(array (
 <form id="search-form" action="<?php echo $_smarty_tpl->getVariable('gvar')->value['l_global'];?>
 c_buscar_encuesta.php?option=buscar" method="post">
 
-		<input type="text" name="nombre" <?php if (isset($_smarty_tpl->getVariable('object',null,true,false)->value)){?> value="<?php echo $_smarty_tpl->getVariable('object')->value->nombre;?>
+		<input type="text" name="consulta" <?php if (isset($_smarty_tpl->getVariable('object',null,true,false)->value)){?> value="<?php echo $_smarty_tpl->getVariable('object')->value->consulta;?>
 " <?php }?> autocomplete="off" required/>
 		<input type="submit" value="Buscar"/>
+		<?php if (isset($_smarty_tpl->getVariable('object',null,true,false)->value->consulta)){?>
+			<?php if ((sizeof($_smarty_tpl->getVariable('encuestas')->value)==0)){?>
+				<label>No se encontraron resultados...</label>
+			<?php }?>
+		<?php }else{ ?>
+			<label>Encuestas que te podrían interesar...</label>
+		<?php }?>
 		
 	<center>
 		<table width="100%">

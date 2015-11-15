@@ -294,6 +294,19 @@ class db
 					$in="'" . implode("', '", $encuestas) . "'";
 					$info=$this->get_data("SELECT * FROM encuesta WHERE codigo IN ($in);");
 				break;
+
+				case "by_consulta":
+					$this->escape_string($data);
+					$consulta=$data['consulta'];
+					$trozos=explode(" ",$consulta); 
+   					$numero=count($trozos);
+   					if($numero==1){
+   						$info=$this->get_data("SELECT * FROM encuesta WHERE nombre LIKE '%$consulta%'");
+   					}else{
+   						$info=$this->get_data("SELECT *, MATCH (nombre) AGAINST ('$consulta') AS puntuacion FROM encuesta 
+   							WHERE MATCH (nombre) AGAINST ('$consulta') ORDER BY puntuacion DESC LIMIT 50;");
+   					}
+				break;
 				
 			}
 			

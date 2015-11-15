@@ -22,10 +22,18 @@
 
 		}
 
+		private function buscar(){
+			$this->orm->connect();
+			$options['encuesta']['lvl2']="by_consulta";
+	    	$cod['encuesta']['consulta']=$this->post->consulta;
+	    	$this->orm->read_data(array("encuesta"), $options, $cod);
+	    	$encuestas= $this->orm->get_objects("encuesta");
+	    	$this->engine->assign('object',$this->post);
+	    	$this->engine->assign('encuestas', $encuestas);
+		}
+
 	    public function display(){
-	    	if(isset($consulta)){
-	    		
-	    	}else{
+	    	if(!isset($_POST['consulta'])){
 	    		$this->orm->connect();
 	    		$options['interes']['lvl2']="by_persona";
 	    		$cod['interes']['persona']=$_SESSION['persona']['cedula'];
@@ -36,17 +44,27 @@
 	    		$cod['encuesta']['tipo']=$interes;
 				$this->orm->read_data(array("encuesta"), $options, $cod);
 				$encuestas= $this->orm->get_objects("encuesta");
+				$this->engine->assign('encuestas', $encuestas);
 	    	}
-	    	$this->engine->assign('encuestas', $encuestas);
-	    	$this->engine->assign('title', "Buscar encuesta");
-	    	$this->engine->display('header.tpl');
-	    	$this->engine->display($this->temp_aux);
-	        $this->engine->display('buscar_encuesta.tpl');
-	        $this->engine->display('footer.tpl');
 
+	    		$this->engine->assign('title', "Buscar encuesta");
+	    		$this->engine->display('header.tpl');
+	    		$this->engine->display($this->temp_aux);
+		        $this->engine->display('buscar_encuesta.tpl');
+		        $this->engine->display('footer.tpl');
 	    }
 		
-		public function run(){ 
+		public function run(){
+			try {if (isset($this->get->option)){$this->{$this->get->option}();}}
+		    
+		    catch (Exception $e){
+					$this->error=1; $this->msg_warning=$e->getMessage();
+					$this->engine->assign('object',$this->post);
+					$this->engine->assign('type_warning',$this->type_warning);
+					$this->engine->assign('msg_warning',$this->msg_warning);
+					$this->temp_aux = 'message.tpl';					
+			}   
+ 
         	$this->display();
 		}
 	}
