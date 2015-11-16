@@ -270,6 +270,13 @@ class db
 					$info=$this->get_data("SELECT * FROM encuesta;");
 				break;
 
+				case "by_codigo":
+					$this->escape_string($data);
+					$codigo=$data['codigo'];
+
+					$info=$this->get_data("SELECT * FROM encuesta WHERE codigo=$codigo;");
+				break;
+
 				case "by_tipo":
 					$this->escape_string($data);
 					$tipo=$data['tipo'];
@@ -309,7 +316,16 @@ class db
 				break;
 				
 			}
-			
+
+			case "pregunta":
+			switch($option['lvl2']){
+				case "by_encuesta":
+					$this->escape_string($data);
+					$encuesta=$data['encuesta'];
+					$info=$this->get_data("SELECT * FROM pregunta WHERE encuesta=$encuesta;");
+				break;
+			}
+			break;			
 			default: break;
 		}
 		return $info;

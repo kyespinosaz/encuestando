@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.9, created on 2015-11-15 17:16:37
+<?php /* Smarty version Smarty-3.0.9, created on 2015-11-15 22:07:25
          compiled from "C:/wamp/www/encuestando/glight/templates\buscar_encuesta.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:289865648afe573b559-24835507%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:279055648f40d1d4b51-37603747%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '87f2d72fb337ce96b81c391f056814bb20b2dbf2' => 
     array (
       0 => 'C:/wamp/www/encuestando/glight/templates\\buscar_encuesta.tpl',
-      1 => 1447604194,
+      1 => 1447621643,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '289865648afe573b559-24835507',
+  'nocache_hash' => '279055648f40d1d4b51-37603747',
   'function' => 
   array (
   ),
@@ -65,7 +65,8 @@ $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['last']       = ($_smart
 </label>
 							<label>Retribución: <?php echo $_smarty_tpl->getVariable('encuestas')->value[$_smarty_tpl->getVariable('smarty')->value['section']['i']['index']]->get('retribucion');?>
  </label>																	
-							<a class="button" href="#">Responder</a>
+							<a class="button" href="c_responder_encuesta.php?codigo=<?php echo $_smarty_tpl->getVariable('encuestas')->value[$_smarty_tpl->getVariable('smarty')->value['section']['i']['index']]->get('codigo');?>
+">Responder</a>
 							
 						</td>
 					</tr>

@@ -18,7 +18,7 @@
 							<h4>{$encuestas[i]->get('nombre')}</h4>												
 							<label>Fecha de finalización: {$encuestas[i]->get('fechaFinalizacion')}</label>
 							<label>Retribución: {$encuestas[i]->get('retribucion')} </label>																	
-							<a class="button" href="#">Responder</a>
+							<a class="button" href="c_responder_encuesta.php?codigo={$encuestas[i]->get('codigo')}">Responder</a>
 							
 						</td>
 					</tr>
