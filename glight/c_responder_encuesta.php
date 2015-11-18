@@ -4,9 +4,9 @@
 	class c_responder_encuesta extends super_controller {
 
 		private function displayMessage($msg_type, $msg_content){
-			if(strcmp($msg_type, "Registro completado")==0){
-				$this->engine->assign('red',1);
-				$msg_icon="check-square";
+			if(strcmp($msg_type, "Acción no permitida")==0){
+				$msg_icon="warning";
+				$msg_dir="";
 				$msg_dir=$gvar['l_global']."login.php";
 			}else{
 				$msg_icon="warning";
@@ -61,28 +61,30 @@
 		}
 
 	    public function display(){
-	    	if(isset($_GET['codigo'])){
-	    		if($this->validarParticipacion($_GET['codigo'])){
-		    		$options['encuesta']['lvl2']="by_codigo";
-			    	$cod['encuesta']['codigo']=$_GET["codigo"];
+	    	if($_SESSION['persona']['rol']=='usuario'){
+		    		if(isset($_GET['codigo'])){
+			    		if($this->validarParticipacion($_GET['codigo'])){
+				    		$options['encuesta']['lvl2']="by_codigo";
+					    	$cod['encuesta']['codigo']=$_GET["codigo"];
 
-		    	   	$options['pregunta']['lvl2']="by_encuesta";
-			    	$cod['pregunta']['encuesta']=$_GET["codigo"];
+				    	   	$options['pregunta']['lvl2']="by_encuesta";
+					    	$cod['pregunta']['encuesta']=$_GET["codigo"];
 
-			    	$options['opcion']['lvl2'] = "all";
+					    	$options['opcion']['lvl2'] = "all";
 
-			    	$components['encuesta']['pregunta']=array("e_p");
-			    	$components['pregunta']['opcion']= array("p_o");
-			    	$this->orm->connect();
-					$this->orm->read_data(array("encuesta", "pregunta", "opcion"),
-						$options,$cod);
-					$encuesta=$this->orm->get_objects("encuesta", $components);
-					$this->engine->assign('encuesta', $encuesta[0]);
-	    		}else{
-	    			$this->displayMessage('Encuesta no disponible','Usted ya ha participado en esta encuesta');
-
-	    		}
-
+					    	$components['encuesta']['pregunta']=array("e_p");
+					    	$components['pregunta']['opcion']= array("p_o");
+					    	$this->orm->connect();
+							$this->orm->read_data(array("encuesta", "pregunta", "opcion"),
+								$options,$cod);
+							$encuesta=$this->orm->get_objects("encuesta", $components);
+							$this->engine->assign('encuesta', $encuesta[0]);
+			    		}else{
+			    			$this->displayMessage('Encuesta no disponible','Usted ya ha participado en esta encuesta');
+			    		}
+		    	}
+	    	}else{
+	    		$this->displayMessage('Acción no permitida','Usted no tiene permisos para realizar esta acción');
 	    	}
 
 	    	$this->engine->assign('title', "Responder encuesta");
@@ -100,7 +102,8 @@
 					$this->engine->assign('object',$this->post);
 					$this->engine->assign('type_warning',$this->type_warning);
 					$this->engine->assign('msg_warning',$this->msg_warning);
-					$this->temp_aux = 'message.tpl';					
+					$this->temp_aux = 'message.tpl';
+
 			}   
  
         	$this->display();
