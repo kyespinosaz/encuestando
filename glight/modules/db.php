@@ -152,6 +152,33 @@ class db
 					break;					
 			}
 			break;
+
+			case "respuesta":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$this->escape_string($object);
+					$opcion=$object->get('opcion');
+					$usuario=$object->get('usuario');
+					$this->do_operation("INSERT INTO respuesta (opcion, usuario) VALUES
+						('$opcion', '$usuario');");
+				break;					
+			}
+			break;
+
+			case "beneficio":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$this->escape_string($object);
+					$encuesta=$object->get('encuesta');
+					$tarjeta=$object->get('tarjeta');
+					$fecha=$object->get('fecha');
+					$this->do_operation("INSERT INTO beneficio (encuesta, tarjeta, fecha) VALUES
+						('$encuesta', '$tarjeta', '$fecha');");
+				break;					
+			}
+			break;
 			
 			default: break;
 		}
@@ -325,7 +352,26 @@ class db
 					$info=$this->get_data("SELECT * FROM pregunta WHERE encuesta=$encuesta;");
 				break;
 			}
-			break;			
+			break;	
+
+			case "opcion":
+			switch($option['lvl2']){
+				case "all":
+					$info=$this->get_data("SELECT * FROM opcion;");
+				break;
+			}
+			break;
+
+			case "beneficio":
+			switch($option['lvl2']){
+				case "by_encuesta":
+					$this->escape_string($data);
+					$encuesta=$data['encuesta'];
+					$info=$this->get_data("SELECT * FROM beneficio WHERE encuesta=$encuesta;");
+				break;
+			}
+			break;
+
 			default: break;
 		}
 		return $info;

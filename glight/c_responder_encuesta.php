@@ -11,6 +11,7 @@
 			}else{
 				$msg_icon="warning";
 				$msg_dir="";
+				$msg_dir=$gvar['l_global']."c_buscar_encuesta.php";
 			}
 
 			$this->temp_aux = 'message.tpl';
@@ -22,19 +23,67 @@
 
 		}
 
+		private function validarParticipacion($codigo){
+			$this->orm->connect();
+			$options['beneficio']['lvl2']="by_encuesta";
+			$cod['beneficio']['encuesta']=$codigo;
+			$this->orm->read_data(array("beneficio"), $options, $cod);
+	    	$beneficio = $this->orm->get_objects("beneficio",$components);
+
+	    	if(is_empty($beneficio)){
+	    		return true;
+	    	}
+
+	    	return false;
+	    	$this->orm->close();
+		}
+
+		public function responder(){
+			$this->orm->connect();
+			$encuesta=$this->post->encuesta;
+			unset($this->post->encuesta);
+
+				foreach ($this->post as $key => $value) {
+					$respuesta=new respuesta();
+					$respuesta->set('opcion', $value[0]);
+					$respuesta->set('usuario', $_SESSION['persona']['cedula']);
+					$this->orm->insert_data("normal", $respuesta);
+					unset($respuesta);
+				}
+
+			$beneficio= new beneficio();
+			$beneficio->set('encuesta', $encuesta);
+			$beneficio->set('tarjeta', $_SESSION['persona']['cedula']);
+			$beneficio->set('fecha',date("y-m-d"));
+			$this->orm->insert_data("normal", $beneficio);
+
+			$this->orm->close();
+		}
+
 	    public function display(){
-	    	$options['encuesta']['lvl2']="by_codigo";
-	    	$cod['encuesta']['codigo']=$_GET["codigo"];
+	    	if(isset($_GET['codigo'])){
+	    		if($this->validarParticipacion($_GET['codigo'])){
+		    		$options['encuesta']['lvl2']="by_codigo";
+			    	$cod['encuesta']['codigo']=$_GET["codigo"];
 
-    	   	$options['pregunta']['lvl2']="by_encuesta";
-	    	$cod['pregunta']['encuesta']=$_GET["codigo"];
+		    	   	$options['pregunta']['lvl2']="by_encuesta";
+			    	$cod['pregunta']['encuesta']=$_GET["codigo"];
 
-	    	$components['encuesta']['pregunta']=array("e_p");
-	    	$this->orm->connect();
-			$this->orm->read_data(array("encuesta", "pregunta"),
-				$options,$cod);
-			$encuesta=$this->orm->get_objects("encuesta", $components);
-			print_r2($encuesta);
+			    	$options['opcion']['lvl2'] = "all";
+
+			    	$components['encuesta']['pregunta']=array("e_p");
+			    	$components['pregunta']['opcion']= array("p_o");
+			    	$this->orm->connect();
+					$this->orm->read_data(array("encuesta", "pregunta", "opcion"),
+						$options,$cod);
+					$encuesta=$this->orm->get_objects("encuesta", $components);
+					$this->engine->assign('encuesta', $encuesta[0]);
+	    		}else{
+	    			$this->displayMessage('Encuesta no disponible','Usted ya ha participado en esta encuesta');
+
+	    		}
+
+	    	}
 
 	    	$this->engine->assign('title', "Responder encuesta");
 	    	$this->engine->display('header.tpl');
