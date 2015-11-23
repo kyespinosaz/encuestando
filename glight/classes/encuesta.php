@@ -41,6 +41,16 @@ class encuesta extends object_standard{
 			break;
 		}
 	}
-}
 
+	public function validarCompletitud(){				
+			if(is_empty($this->get('nombre')) || is_empty($this->get('retribucion')) || is_empty($this->get('fechaPublicacion')) || is_empty($this->get('fechaFinalizacion')) || is_empty($this->get('empresa'))){
+				return false;
+			}
+			return true;
+	}
+
+	public function validarFecha(){
+		return (strtotime($this->get('fechaPublicacion'))<strtotime($this->get('fechaFinalizacion')));		
+	}
+}
 ?>
