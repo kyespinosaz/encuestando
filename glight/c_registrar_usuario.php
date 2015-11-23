@@ -28,7 +28,7 @@
 			$persona->set("rol","usuario");
 
 			if($persona->validarCompletitud()){
-				if($this->validarIntereses){
+				if($this->validarIntereses()){
 					if($persona->validarCaracteres()){
 						try{
 							$this->orm->connect();

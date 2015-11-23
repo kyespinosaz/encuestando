@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.9, created on 2015-11-15 15:41:38
+<?php /* Smarty version Smarty-3.0.9, created on 2015-11-23 19:56:04
          compiled from "C:/wamp/www/encuestando/glight/templates\header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:21649564899a265f7d7-33259012%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:948356536144788c02-25388195%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'c2cf198205f6a9b6da51529d99db13c49bd53463' => 
     array (
       0 => 'C:/wamp/www/encuestando/glight/templates\\header.tpl',
-      1 => 1447598496,
+      1 => 1448304962,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '21649564899a265f7d7-33259012',
+  'nocache_hash' => '948356536144788c02-25388195',
   'function' => 
   array (
   ),
@@ -62,7 +62,6 @@ suscribir_empresa.php">Suscribir empresa</a></li>
                             <li><a href="<?php echo $_smarty_tpl->getVariable('gvar')->value['l_global'];?>
 c_buscar_encuesta.php">Buscar encuesta</a></li>
                             <li><a href=#>Realizar canje</a></li>
-                            <li><a href=#>Responder encuesta</a></li>
                         <?php }?>
 
                         <?php if ($_SESSION['persona']['rol']=="administrador"){?>

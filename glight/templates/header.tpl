@@ -39,7 +39,6 @@
                         {if $smarty.session.persona.rol == "usuario"}
                             <li><a href="{$gvar.l_global}c_buscar_encuesta.php">Buscar encuesta</a></li>
                             <li><a href=#>Realizar canje</a></li>
-                            <li><a href=#>Responder encuesta</a></li>
                         {/if}
 
                         {if $smarty.session.persona.rol == "administrador"}

@@ -28,8 +28,8 @@
 				</table>
 
 			<a class="button" href="{$gvar.l_global}login.php">Atrás</a>
-			<input class="btn btn-primary" type="submit" value="Registrar"/>
-			<input class="btn btn-primary" type="reset"  value="Borrar">
+			<input class="button" type="submit" value="Registrar"/>
+			<input class="button" type="reset"  value="Borrar">
 			</center>
 
 		</form>
