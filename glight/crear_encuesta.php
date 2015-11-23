@@ -115,7 +115,7 @@
 			if(strcmp($msg_type, "Registro completado")==0){				
 				$msg_icon="check-square";
 				$msg_dir=$gvar['l_global']."login.php";
-			}elseif ($msg_type == "Empresa no encontrada") {
+			}elseif (($msg_type == "Empresa no encontrada")||($msg_type == "Acción no permitida")) {
 				$msg_icon="warning";
 				$msg_dir=$gvar['l_global']."login.php";
 			}else{
@@ -132,28 +132,34 @@
 		}
 
 	    public function display()
-	    {
+	    {	
+	    	if($_SESSION['persona']['rol']=='representante'){
+		    	if($this->ValidarEmpresasRepresentante()){
+					/*$this->orm->connect();
+					$options['empresa']['lvl2']="by_persona";
+					$this->orm->read_data(array("empresa"), $options);
+					$canal_inicial=$this->orm->get_objects("canal");
+					$this->engine->assign('canal_inicial',$canal_inicial);*/
+					//$tz = 'America/Bogota';	
+					//echo (new DateTime("now",new DateTimeZone($tz)))->format('Y-m-d H:i:s');
 
-	    	if($this->ValidarEmpresasRepresentante()){
-				/*$this->orm->connect();
-				$options['empresa']['lvl2']="by_persona";
-				$this->orm->read_data(array("empresa"), $options);
-				$canal_inicial=$this->orm->get_objects("canal");
-				$this->engine->assign('canal_inicial',$canal_inicial);*/
-				//$tz = 'America/Bogota';	
-				//echo (new DateTime("now",new DateTimeZone($tz)))->format('Y-m-d H:i:s');
-
-				$this->engine->assign('title', "Crear encuesta");
-		    	$this->engine->display('header.tpl');	    	
-		        $this->engine->display($this->temp_aux);	        		        
-		        $this->engine->display('crear_encuesta.tpl');
-		        $this->engine->display('footer.tpl');
-	    	}else{
-	    		$this->engine->display('header.tpl');	     		
-	    		$this->displayMessage("Empresa no encontrada","Para crear encuestas necesita tener al menos una empresa registrada en el sistema");
-	    		$this->engine->display($this->temp_aux);
-	    		$this->engine->display('footer.tpl');
-	    	}
+					$this->engine->assign('title', "Crear encuesta");
+			    	$this->engine->display('header.tpl');	    	
+			        $this->engine->display($this->temp_aux);	        		        
+			        $this->engine->display('crear_encuesta.tpl');
+			        $this->engine->display('footer.tpl');
+		    	}else{
+		    		$this->engine->display('header.tpl');	     		
+		    		$this->displayMessage("Empresa no encontrada","Para crear encuestas necesita tener al menos una empresa registrada en el sistema");
+		    		$this->engine->display($this->temp_aux);
+		    		$this->engine->display('footer.tpl');
+		    	}
+		    }else{
+		    		$this->engine->display('header.tpl');	     		
+		    		$this->displayMessage("Acción no permitida","Usted no tiene permisos para realizar esta acción");
+		    		$this->engine->display($this->temp_aux);
+		    		$this->engine->display('footer.tpl');
+		    }
 	    }
 
 	    public function run()
