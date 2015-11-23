@@ -5,6 +5,7 @@ class beneficio extends object_standard{
 	protected $encuesta;
 	protected $tarjeta;
 	protected $fecha;
+	protected $retribucion;
 	
 	//components
 	var $components = array();
@@ -18,7 +19,7 @@ class beneficio extends object_standard{
 			"foreign" => "encuesta", "foreign_attribute" => "codigo"),
 			"tarjeta" =>array("foreign_name" => "t_b", 
 			"foreign" => "tarjeta", "foreign_attribute" => "persona"),
-			"fecha" => array()); 
+			"fecha" => array(), "retribucion" => array()); 
 	}
 
 	public function primary_key(){

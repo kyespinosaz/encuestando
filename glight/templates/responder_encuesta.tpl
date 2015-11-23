@@ -13,7 +13,7 @@
 								<table width="100%">
 									<td>
 										<input id="{$encuesta->components['pregunta']['e_p'][i]->components['opcion']['p_o'][j]->get('codigo')}" type="radio" 
-										name="respuesta{$encuesta->components['pregunta']['e_p'][i]->get('numero')}[]" value="{$encuesta->components['pregunta']['e_p'][i]->components['opcion']['p_o'][j]->get('codigo')}">
+										name="respuesta{$encuesta->components['pregunta']['e_p'][i]->get('numero')}[]" value="{$encuesta->components['pregunta']['e_p'][i]->components['opcion']['p_o'][j]->get('codigo')}" required>
 										<label for="{$encuesta->components['pregunta']['e_p'][i]->components['opcion']['p_o'][j]->get('codigo')}">{$encuesta->components['pregunta']['e_p'][i]->components['opcion']['p_o'][j]->get('contenido')}</label>
 									</td>
 								</table>

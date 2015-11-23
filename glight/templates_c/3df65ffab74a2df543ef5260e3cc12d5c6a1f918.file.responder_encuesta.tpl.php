@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.9, created on 2015-11-21 22:54:17
+<?php /* Smarty version Smarty-3.0.9, created on 2015-11-23 16:29:31
          compiled from "C:/wamp/www/encuestando/glight/templates\responder_encuesta.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:26534564bcaa03c5305-21054740%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:22272565330db3424e5-97933210%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '3df65ffab74a2df543ef5260e3cc12d5c6a1f918' => 
     array (
       0 => 'C:/wamp/www/encuestando/glight/templates\\responder_encuesta.tpl',
-      1 => 1448142832,
+      1 => 1448292564,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '26534564bcaa03c5305-21054740',
+  'nocache_hash' => '22272565330db3424e5-97933210',
   'function' => 
   array (
   ),
@@ -85,7 +85,7 @@ $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['last']       = ($_smart
 " type="radio" 
 										name="respuesta<?php echo $_smarty_tpl->getVariable('encuesta')->value->components['pregunta']['e_p'][$_smarty_tpl->getVariable('smarty')->value['section']['i']['index']]->get('numero');?>
 []" value="<?php echo $_smarty_tpl->getVariable('encuesta')->value->components['pregunta']['e_p'][$_smarty_tpl->getVariable('smarty')->value['section']['i']['index']]->components['opcion']['p_o'][$_smarty_tpl->getVariable('smarty')->value['section']['j']['index']]->get('codigo');?>
-">
+" required>
 										<label for="<?php echo $_smarty_tpl->getVariable('encuesta')->value->components['pregunta']['e_p'][$_smarty_tpl->getVariable('smarty')->value['section']['i']['index']]->components['opcion']['p_o'][$_smarty_tpl->getVariable('smarty')->value['section']['j']['index']]->get('codigo');?>
 "><?php echo $_smarty_tpl->getVariable('encuesta')->value->components['pregunta']['e_p'][$_smarty_tpl->getVariable('smarty')->value['section']['i']['index']]->components['opcion']['p_o'][$_smarty_tpl->getVariable('smarty')->value['section']['j']['index']]->get('contenido');?>
 </label>

@@ -174,8 +174,9 @@ class db
 					$encuesta=$object->get('encuesta');
 					$tarjeta=$object->get('tarjeta');
 					$fecha=$object->get('fecha');
-					$this->do_operation("INSERT INTO beneficio (encuesta, tarjeta, fecha) VALUES
-						('$encuesta', '$tarjeta', '$fecha');");
+					$retribucion=$object->get('retribucion');
+					$this->do_operation("INSERT INTO beneficio (encuesta, tarjeta, fecha, retribucion) VALUES
+						('$encuesta', '$tarjeta', '$fecha', $retribucion);");
 				break;					
 			}
 			break;
@@ -189,12 +190,15 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																																		
-			case "user":
+			case "tarjeta":
 			switch($options['lvl2'])
 			{
-				case "normal":
-					//
-					break;
+				case "saldo":
+						$this->escape_string($object);
+						$persona=$object->get('persona');
+						$saldo=$object->get('saldo');
+						$this->do_operation("UPDATE tarjeta set saldo=$saldo WHERE persona='$persona';");
+				break;
 			}
 			break;
 			
@@ -254,6 +258,15 @@ class db
                 break;
 			}
 			break;
+
+			case "tarjeta":
+			switch ($option['lvl2']) {
+				case 'by_persona':
+						$this->escape_string($data);
+						$persona=$data['persona'];
+						$info=$this->get_data("SELECT * FROM tarjeta WHERE persona=$persona;");
+				break;
+			}
 
 			case "plan":
 			switch ($option['lvl2']) {
@@ -350,6 +363,12 @@ class db
 					$this->escape_string($data);
 					$encuesta=$data['encuesta'];
 					$info=$this->get_data("SELECT * FROM pregunta WHERE encuesta=$encuesta;");
+				break;
+
+				case "num_preguntas_by_encuesta":
+					$this->escape_string($data);
+					$encuesta=$data['encuesta'];
+					$info=$this->get_data("SELECT COUNT(encuesta) AS numeroPreguntas FROM pregunta WHERE encuesta=$encuesta");
 				break;
 			}
 			break;	

@@ -6,11 +6,18 @@
 		private function displayMessage($msg_type, $msg_content){
 			if(strcmp($msg_type, "Acción no permitida")==0){
 				$msg_icon="warning";
-				$msg_dir="";
 				$msg_dir=$gvar['l_global']."login.php";
-			}else{
+
+			}if(strcmp($msg_type, "Preguntas sin responder")==0){
 				$msg_icon="warning";
 				$msg_dir="";
+
+			}if(strcmp($msg_type, "Encuesta respondida exitosamente")==0){
+				$msg_icon="check-square";
+				$msg_dir=$gvar['l_global']."login.php";
+
+			}else{
+				$msg_icon="warning";
 				$msg_dir=$gvar['l_global']."c_buscar_encuesta.php";
 			}
 
@@ -40,8 +47,20 @@
 
 		public function responder(){
 			$this->orm->connect();
-			$encuesta=$this->post->encuesta;
+			$codigo=$this->post->encuesta;
 			unset($this->post->encuesta);
+
+			$options['pregunta']['lvl2']="num_preguntas_by_encuesta";
+			$cod['pregunta']['encuesta']=$codigo;
+			$numPreguntas =$this->orm->read_data2(array("pregunta"), $options, $cod);
+
+			$options['encuesta']['lvl2']="by_codigo";
+			$cod['encuesta']['codigo']=$codigo;
+			$this->orm->read_data(array("encuesta"),$options,$cod);
+			$encuesta=$this->orm->get_objects("encuesta", $options,$cod);
+			$encuesta=new encuesta($encuesta[0]);
+
+			if($numPreguntas[0]==sizeof($this->post)){
 
 				foreach ($this->post as $key => $value) {
 					$respuesta=new respuesta();
@@ -51,11 +70,42 @@
 					unset($respuesta);
 				}
 
-			$beneficio= new beneficio();
-			$beneficio->set('encuesta', $encuesta);
-			$beneficio->set('tarjeta', $_SESSION['persona']['cedula']);
-			$beneficio->set('fecha',date("y-m-d"));
-			$this->orm->insert_data("normal", $beneficio);
+				$beneficio= new beneficio();				
+				$beneficio->set('encuesta', $encuesta->get('codigo'));
+				$beneficio->set('tarjeta', $_SESSION['persona']['cedula']);
+				$beneficio->set('fecha',date("y-m-d"));
+				$beneficio->set('retribucion', $encuesta->get('retribucion'));
+				$this->orm->insert_data("normal", $beneficio);
+				
+				$options['tarjeta']['lvl2']="by_persona";
+				$cod['tarjeta']['persona']=$_SESSION['persona']['cedula'];
+				$this->orm->read_data(array("tarjeta"),$options,$cod);
+				$tarjeta=$this->orm->get_objects("tarjeta", $options,$cod);
+				$tarjeta=new tarjeta($tarjeta[0]);
+
+				$tarjeta->set('saldo', ($tarjeta->get('saldo') + $encuesta->get('retribucion')));
+				$this->orm->update_data("saldo",$tarjeta);
+
+				$this->displayMessage('Encuesta respondida exitosamente','¡Gracias por participar!');
+				
+			}else{
+				$this->displayMessage('Preguntas sin responder','Por favor seleccione una opción de respuesta para cada una de las preguntas presente en la encuesta');
+				
+				$options['encuesta']['lvl2']="by_codigo";
+				$cod['encuesta']['codigo']=$encuesta;
+
+				$options['pregunta']['lvl2']="by_encuesta";
+				$cod['pregunta']['encuesta']=$encuesta;
+
+				$options['opcion']['lvl2'] = "all";
+
+				$components['encuesta']['pregunta']=array("e_p");
+				$components['pregunta']['opcion']= array("p_o");
+				$this->orm->read_data(array("encuesta", "pregunta", "opcion"),$options,$cod);
+				$encuesta=$this->orm->get_objects("encuesta", $components);
+							
+				$this->engine->assign('encuesta', $encuesta[0]);
+			}
 
 			$this->orm->close();
 		}
@@ -78,11 +128,12 @@
 							$this->orm->read_data(array("encuesta", "pregunta", "opcion"),
 								$options,$cod);
 							$encuesta=$this->orm->get_objects("encuesta", $components);
+							
 							$this->engine->assign('encuesta', $encuesta[0]);
 			    		}else{
 			    			$this->displayMessage('Encuesta no disponible','Usted ya ha participado en esta encuesta');
 			    		}
-		    	}
+		    		}
 	    	}else{
 	    		$this->displayMessage('Acción no permitida','Usted no tiene permisos para realizar esta acción');
 	    	}
