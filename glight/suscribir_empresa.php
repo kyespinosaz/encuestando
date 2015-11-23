@@ -46,8 +46,11 @@
 		}
 
 		private function displayMessage($msg_type, $msg_content){
-			if($msg_type=="Registro completado"){				
+			if($msg_type == "Registro completado"){				
 				$msg_icon="check-square";
+				$msg_dir=$gvar['l_global']."login.php";
+			}elseif($msg_type == "Acción no permitida"){
+				$msg_icon="warning";
 				$msg_dir=$gvar['l_global']."login.php";
 			}else{
 				$msg_icon="warning";
@@ -62,14 +65,21 @@
 			$this->engine->assign('msg_content', $msg_content);
 		}
 
-	    public function display()
+	     public function display()
 	    {	    	
-			$this->engine->assign('title', "Suscribir empresa");
-			$this->engine->assign('persona',$_SESSION['persona']['cedula']);
-	    	$this->engine->display('header.tpl');	    	
-	        $this->engine->display($this->temp_aux);	        		        
-	        $this->engine->display('suscribir_empresa.tpl');	        
-	        $this->engine->display('footer.tpl');
+	    	if($_SESSION['persona']['rol']=='representante'){
+				$this->engine->assign('title', "Suscribir empresa");
+				$this->engine->assign('persona',$_SESSION['persona']['cedula']);
+		    	$this->engine->display('header.tpl');	    	
+		        $this->engine->display($this->temp_aux);	        		        
+		        $this->engine->display('suscribir_empresa.tpl');	        
+		        $this->engine->display('footer.tpl');
+		    }else{
+		    	$this->displayMessage("Acción no permitida","Usted no tiene permisos para realizar esta acción");
+		    	$this->engine->display('header.tpl');	    	
+		        $this->engine->display($this->temp_aux);	        
+		        $this->engine->display('footer.tpl');
+		    }
 	    }
 		
 		public function run()
