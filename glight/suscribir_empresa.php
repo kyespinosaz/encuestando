@@ -40,9 +40,9 @@
 			$this->orm->close();
 
 			if($persona[0]->get('rol')=="representante"){				
-				return false;
+				return true;
 			}
-			return true;
+			return false;
 		}
 
 		private function displayMessage($msg_type, $msg_content){

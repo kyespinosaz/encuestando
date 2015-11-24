@@ -301,6 +301,13 @@ class db
 					$persona=$data['persona'];
 					$info=$this->get_data("SELECT e.nit, e.nombre, e.direccion, e.telefono, e.persona FROM empresa e, persona p WHERE p.cedula=e.persona AND e.persona=$persona;");
 				break;
+
+				case "by_persona_nit":
+					$this->escape_string($data);
+					$persona=$data['persona'];
+					$nit=$data['empresa'];
+					$info=$this->get_data("SELECT e.nit, e.nombre, e.direccion, e.telefono, e.persona FROM empresa e, persona p WHERE p.cedula=e.persona AND e.persona=$persona AND e.nit=$nit;");
+				break;
 			}
 			break;
 

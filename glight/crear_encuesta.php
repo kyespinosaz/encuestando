@@ -12,7 +12,8 @@
 			if($encuesta->validarCompletitud()){
 				if(isset($this->post->pregunta)){
 					if($encuesta->validarFecha()){
-						if($this->ValidarPreguntas($this->post->pregunta,$this->post->opcion)){
+						if($this->ValidarPreguntas($this->post->pregunta,$this->post->opcion)){							
+							
 					        $this->orm->connect();
 					        $this->orm->insert_data("normal",$encuesta);
 
@@ -59,9 +60,9 @@
 								unset($pregunta);
 								$num_preg = $num_preg + 1;
 							}
-					       
-					        $this->displayMessage("Registro completado","Encuesta creada correctamente");
-					        $this->orm->close();
+						       
+						        $this->displayMessage("Registro completado","Encuesta creada correctamente");
+						        $this->orm->close();    
 		 				}else{
 		 					$this->displayMessage("Datos obligatorios vacíos", "Debe ingresar las preguntas completas con sus respectivas opciones");
 		 				}						
@@ -174,6 +175,8 @@
 						$this->temp_aux = 'message.tpl';*/
 						if ((substr ($e->getMessage(),-4))==1062){
 							$this->displayMessage("Nombre  ya existe", "La información que ha ingresado ya existe en la base de datos");
+						}elseif ((substr ($e->getMessage(),-4))==1452){
+							$this->displayMessage("Empresa no válida", "La empresa seleccionada no se encuentra en la base de datos");						
 						}else{
 							$this->displayMessage("Error", $e->getMessage());
 						}					

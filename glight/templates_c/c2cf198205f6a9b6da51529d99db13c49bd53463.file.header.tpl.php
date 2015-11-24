@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.0.9, created on 2015-11-23 19:58:09
+<?php /* Smarty version Smarty-3.0.9, created on 2015-11-24 18:48:07
          compiled from "C:/wamp/www/encuestando/glight/templates\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:2478565361c1cf4b58-45476504%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_smarty_tpl->decodeProperties(array (
     'c2cf198205f6a9b6da51529d99db13c49bd53463' => 
     array (
       0 => 'C:/wamp/www/encuestando/glight/templates\\header.tpl',
-      1 => 1448304666,
+      1 => 1448384765,
       2 => 'file',
     ),
   ),
