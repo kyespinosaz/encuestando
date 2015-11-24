@@ -37,6 +37,7 @@
                         {/if}
 
                         {if $smarty.session.persona.rol == "usuario"}
+                            <li><a href="{$gvar.l_global}editar_usuario.php">Editar usuario</a></li>
                             <li><a href="{$gvar.l_global}c_buscar_encuesta.php">Buscar encuesta</a></li>
                             <li><a href=#>Realizar canje</a></li>
                         {/if}

@@ -170,6 +170,25 @@ class db
 					break;
 			}
 			break;
+
+
+			case "persona":
+			switch($options['lvl2'])
+			{
+				case "by_cedula":
+					$this->escape_string($object);					
+					$nombre=$object->get('nombre');
+					$cedula=$object->get('cedula');				
+					$hasher = new PasswordHash(8, FALSE);
+					$contrasena = $hasher->HashPassword($object->get('contrasena'));
+					unset($hasher);
+					$sexo=$object->get('sexo');
+					$ocupacion=$object->get('ocupacion');
+					$rol=$object->get('rol');
+					$this->do_operation("UPDATE persona SET nombre='$nombre',contrasena='$contrasena',sexo='$sexo',ocupacion='$ocupacion' ,rol='$rol'  where cedula='$cedula'"); 
+					break;
+			}
+			break;
 			
 			default: break;
 		}
@@ -185,6 +204,17 @@ class db
 				case "one": 
 					break;
 			}
+			break;
+
+			case "interes":
+			switch($options['lvl2'])
+			{
+				case "by_persona":
+					$this->escape_string($object);
+					$persona=$object->get('persona');									
+					$this->do_operation("DELETE FROM interes WHERE persona='$persona'"); 
+				break;			
+			}			
 			break;
 			
 			default: break;			  
