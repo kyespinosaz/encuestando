@@ -60,9 +60,6 @@
 			$encuesta=$this->orm->get_objects("encuesta", $options,$cod);
 			$encuesta=new encuesta($encuesta[0]);
 
-			print_r2($numPreguntas);
-			print_r2($this->post);
-
 			if($numPreguntas[0]==sizeof($this->post)){
 
 				foreach ($this->post as $key => $value) {
@@ -89,7 +86,7 @@
 				$tarjeta->set('saldo', ($tarjeta->get('saldo') + $encuesta->get('retribucion')));
 				$this->orm->update_data("saldo",$tarjeta);
 
-				//$this->displayMessage('Encuesta respondida exitosamente','¡Gracias por participar!');
+				$this->displayMessage('Encuesta respondida exitosamente','¡Gracias por participar!');
 				
 			}else{
 				$this->displayMessage('Preguntas sin responder','Por favor seleccione una opción de respuesta para cada una de las preguntas presente en la encuesta');
