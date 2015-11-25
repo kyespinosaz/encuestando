@@ -12,73 +12,77 @@
 			if($encuesta->validarCompletitud()){
 				if(isset($this->post->pregunta)){
 					if($encuesta->validarFecha()){
-						if($this->ValidarPreguntas($this->post->pregunta,$this->post->opcion)){
-							if($this->validarCategorias()){
-							
-						        $this->orm->connect();
-						        $this->orm->insert_data("normal",$encuesta);
+						if($encuesta->validarCaracteres()){
+							if($this->ValidarPreguntas($this->post->pregunta,$this->post->opcion)){
+								if($this->validarCategorias()){
+								
+							        $this->orm->connect();
+							        $this->orm->insert_data("normal",$encuesta);
 
-						        $num_preg=1;
+							        $num_preg=1;
 
-								$options['encuesta']['lvl2']="by_nombre";
-								$cod['encuesta']['nombre']=$encuesta->get('nombre');
-								$this->orm->connect();
-								$this->orm->read_data(array("encuesta"), $options, $cod);
-								$encuesta = $this->orm->get_objects("encuesta");
-
-								foreach ($this->post->interes as $key => $value) {
-									settype($categoria, 'object');
-									$categoria->tipo = $value;
-									$categoria->encuesta= $encuesta[0]->get('codigo');
-									$categoria=new categoria($categoria);
-									$this->orm->insert_data("normal", $categoria);
-									unset($categoria);
-								}
-
-						        foreach ($this->post->pregunta as $key => $value) {
-									settype($pregunta, 'object');
-									$pregunta->contenido = $value;
-									$pregunta->numero = $num_preg;								
-
-									$pregunta->encuesta=$encuesta[0]->get('codigo');
-									$pregunta=new pregunta($pregunta);
-									$this->orm->insert_data("normal", $pregunta);
-
-									$num_opc=1;
-
-									$options['pregunta']['lvl2']="by_encuesta_numero";
-									$cod['pregunta']['encuesta']=$pregunta->get('encuesta');
-									$cod['pregunta']['numero']=$pregunta->get('numero');
+									$options['encuesta']['lvl2']="by_nombre";
+									$cod['encuesta']['nombre']=$encuesta->get('nombre');
 									$this->orm->connect();
-									$this->orm->read_data(array("pregunta"), $options, $cod);
-									$pregunta = $this->orm->get_objects("pregunta");
+									$this->orm->read_data(array("encuesta"), $options, $cod);
+									$encuesta = $this->orm->get_objects("encuesta");
 
-									for ($i = (($num_preg-1)*4); $i <= ($num_preg*4-1); $i++) {
-										
-										settype($opcion, 'object');
-										$opcion->contenido = $this->post->opcion[$i];
-										$opcion->numero = $num_opc;
-
-										$opcion->pregunta= $pregunta[0]->get('codigo');
-										$opcion=new opcion($opcion);
-										$this->orm->insert_data("normal", $opcion);
-										unset($opcion);
-
-										$num_opc = $num_opc + 1;
+									foreach ($this->post->interes as $key => $value) {
+										settype($categoria, 'object');
+										$categoria->tipo = $value;
+										$categoria->encuesta= $encuesta[0]->get('codigo');
+										$categoria=new categoria($categoria);
+										$this->orm->insert_data("normal", $categoria);
+										unset($categoria);
 									}
 
-									unset($pregunta);
-									$num_preg = $num_preg + 1;
-								}
-							       
-							        $this->displayMessage("Registro completado","Encuesta creada correctamente");
-							        $this->orm->close();    
+							        foreach ($this->post->pregunta as $key => $value) {
+										settype($pregunta, 'object');
+										$pregunta->contenido = $value;
+										$pregunta->numero = $num_preg;								
+
+										$pregunta->encuesta=$encuesta[0]->get('codigo');
+										$pregunta=new pregunta($pregunta);
+										$this->orm->insert_data("normal", $pregunta);
+
+										$num_opc=1;
+
+										$options['pregunta']['lvl2']="by_encuesta_numero";
+										$cod['pregunta']['encuesta']=$pregunta->get('encuesta');
+										$cod['pregunta']['numero']=$pregunta->get('numero');
+										$this->orm->connect();
+										$this->orm->read_data(array("pregunta"), $options, $cod);
+										$pregunta = $this->orm->get_objects("pregunta");
+
+										for ($i = (($num_preg-1)*4); $i <= ($num_preg*4-1); $i++) {
+											
+											settype($opcion, 'object');
+											$opcion->contenido = $this->post->opcion[$i];
+											$opcion->numero = $num_opc;
+
+											$opcion->pregunta= $pregunta[0]->get('codigo');
+											$opcion=new opcion($opcion);
+											$this->orm->insert_data("normal", $opcion);
+											unset($opcion);
+
+											$num_opc = $num_opc + 1;
+										}
+
+										unset($pregunta);
+										$num_preg = $num_preg + 1;
+									}
+								       
+								        $this->displayMessage("Registro completado","Encuesta creada correctamente");
+								        $this->orm->close();    
+				 				}else{
+				 					$this->displayMessage("Datos obligatorios vacíos", "Debe seleccionar al menos una categoría");
+				 				}
 			 				}else{
-			 					$this->displayMessage("Datos obligatorios vacíos", "Debe seleccionar al menos una categoría");
+			 					$this->displayMessage("Datos obligatorios vacíos", "Debe ingresar las preguntas completas con sus respectivas opciones");
 			 				}
-		 				}else{
-		 					$this->displayMessage("Datos obligatorios vacíos", "Debe ingresar las preguntas completas con sus respectivas opciones");
-		 				}						
+			 			}else{
+			 				$this->displayMessage("Caracteres no permitidos", "Alguno de los caracteres ingresados para el campo Retribución no son permitidos");
+			 			}						
 					}else{
 						$this->displayMessage("Fecha inválida","Debe ingresar una fecha de finalización posterior a la actual");
 					}

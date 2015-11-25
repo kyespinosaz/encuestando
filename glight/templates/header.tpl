@@ -31,7 +31,6 @@
                             <li><a href="{$gvar.l_global}crear_encuesta.php">Crear encuesta</a></li>
                             <li><a href=#>Realizar pago</a></li>
                             <li><a href=#>Eliminar producto</a></li>
-                            <li><a href=#>Agregar pregunta</a></li>
                             <li><a href=#>Buscar producto</a></li>
                             <li><a href=#>Crear producto</a></li>
                             <li><a href=#>Editar producto</a></li>

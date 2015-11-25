@@ -52,5 +52,12 @@ class encuesta extends object_standard{
 	public function validarFecha(){
 		return (strtotime($this->get('fechaPublicacion'))<strtotime($this->get('fechaFinalizacion')));		
 	}
+
+	public function validarCaracteres(){
+		if ( !preg_match('/^[0-9]*$/',$this->get('retribucion')) ){
+				return false;
+		}
+		return true;
+	}
 }
 ?>
