@@ -43,7 +43,6 @@
 	    	$this->engine->display($this->temp_aux);
 	        $this->engine->display('buscar_encuesta.tpl');
 	        $this->engine->display('footer.tpl');
-
 	    }
 		
 		public function run(){ 
