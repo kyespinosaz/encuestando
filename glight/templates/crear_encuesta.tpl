@@ -28,7 +28,28 @@
 							{section loop=$empresas name=i}
 							<option value="{$empresas[i]->get('nit')}">{$empresas[i]->get('nombre')}</option> 
 							{/section}
-						</select><br/><br/>
+						</select> <br/><br/>
+						<label>(*) Seccione las categor&iacute;as:</label>
+						<table width="30%" border="0" cellpadding="0" cellspacing="5" >
+							<tr>
+								<td><input id="mercado" type="checkbox" name="interes[]" value="Mercado" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Mercado'} checked {/if} {/section} {/if}><label for="mercado">Mercado</label>
+								<input id="salud" type="checkbox" name="interes[]" value="Salud" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Salud'} checked {/if} {/section} {/if}><label for="salud">Salud</label>
+								<input id="ropa" type="checkbox" name="interes[]" value="Ropa" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Ropa'} checked {/if} {/section} {/if}><label for="ropa">Ropa </label></td>
+
+								<td><input id="bebe" type="checkbox" name="interes[]" value="Bebe" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Bebe'} checked {/if} {/section} {/if}><label for="bebe">Beb&eacute;</label>
+								<input id="tecno" type="checkbox" name="interes[]" value="Tecnologia" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Tecnologia'} checked {/if} {/section} {/if}><label for="tecno">Tecnolog&iacute;a</label>
+								<input id="deportes" type="checkbox" name="interes[]" value="Deportes" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Deportes'} checked {/if} {/section} {/if}><label for="deportes">Deportes</h6></label></td>
+									                	
+								<td><input id="hogar" type="checkbox" name="interes[]" value="Hogar" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Hogar'} checked {/if} {/section} {/if}><label for="hogar">Hogar</label>
+								<input id="muebles" type="checkbox" name="interes[]" value="Muebles" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Muebles'} checked {/if} {/section} {/if}><label for="muebles">Muebles</label>
+								<input id="vehiculos" type="checkbox" name="interes[]" value="Vehiculos" {if isset($object)} {section loop=$object->interes name=i} {if $object->interes[i] == 'Vehiculos'} checked {/if} {/section} {/if}><label for="vehiculos">Veh&iacute;culos</label></td>
+							</tr>
+						</table>
+
+
+
+
+						<br/><br/>
 						
 						<b>A continuaci&oacuten inserte las preguntas de la encuesta (El n&uacutemero m&aacuteximo de preguntas es 20)</b><br/> <br/> 
 						<div id="main">

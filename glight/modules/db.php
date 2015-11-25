@@ -112,6 +112,18 @@ class db
 			}
 			break;
 
+			case "categoria":
+			switch($options['lvl2']){
+				case "normal":
+
+					$this->escape_string($object);
+					$tipo=$object->get('tipo');
+					$encuesta=$object->get('encuesta');
+					$this->do_operation("INSERT INTO categoria (tipo, encuesta) VALUES
+						('$tipo', '$encuesta');");
+					break;
+			}
+			break;
 
 			case "plan":
 			switch ($options['lvl2']) {
