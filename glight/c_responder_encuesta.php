@@ -36,13 +36,22 @@
 			$cod['beneficio']['encuesta']=$codigo;
 			$this->orm->read_data(array("beneficio"), $options, $cod);
 	    	$beneficio = $this->orm->get_objects("beneficio",$components);
+	    	$this->orm->close();
 
 	    	if(is_empty($beneficio)){
-	    		return true;
+	    		return true;	    		
+	    	}else{
+	    		return false;
 	    	}
 
-	    	return false;
-	    	$this->orm->close();
+		}
+
+		private function contarRespuestas($array){
+			$i=0;
+			foreach ($array as $key => $value) {
+				$i++;
+			}
+			return $i;
 		}
 
 		public function responder(){
@@ -61,7 +70,7 @@
 			$encuesta=$this->orm->get_objects("encuesta", $options,$cod);
 			$encuesta=new encuesta($encuesta[0]);
 
-			if(sizeof($numPreguntas)==sizeof($this->post)){
+			if(sizeof($numPreguntas)==($this->contarRespuestas($this->post))){
 
 				foreach ($this->post as $key => $value) {
 					$respuesta=new respuesta();

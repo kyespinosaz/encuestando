@@ -289,8 +289,7 @@ class db
 	}
 	
 	//function that returns an array with data from a operation
-	public function select($option,$data)
-	{
+	public function select($option,$data){
 		$info = array();
 		switch($option['lvl1'])
 		{
@@ -467,18 +466,18 @@ class db
 					$encuesta=$data['pregunta'];
 					$info=$this->get_data("SELECT * FROM opcion WHERE pregunta=$pregunta;");
 				break;
+			}			
+			default: break;
 
-				case "beneficio":
+			case "beneficio":
 				switch($option['lvl2']){
 					case "by_encuesta":
 						$this->escape_string($data);
 						$encuesta=$data['encuesta'];
 						$info=$this->get_data("SELECT * FROM beneficio WHERE encuesta=$encuesta;");
 					break;
-				}
-				break;
-			}			
-			default: break;
+			}
+			break;
 		}
 		return $info;
 	}
