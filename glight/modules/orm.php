@@ -41,18 +41,7 @@ class orm
 		}
 	}
 
-//para count
-	public function read_data2($class, $options, $cod = array())
-	{	
-		for ($i=0,$n=count($class); $i<$n; $i++)		
-		{
-			$options["$class[$i]"]['lvl1']=$class[$i];
-			$this->data["$class[$i]"] = $this->db->select($options["$class[$i]"],$cod["$class[$i]"]);
-			$this->numpages["$class[$i]"] = $this->db->numpages;
-			return $this->data["$class[$i]"];
-		}
-	}
-	
+
 	//transform data in respective objects
 	public function get_objects($class, $components = NULL, $auxiliars = NULL)
 	{

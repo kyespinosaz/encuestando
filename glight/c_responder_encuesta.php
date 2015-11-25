@@ -8,11 +8,11 @@
 				$msg_icon="warning";
 				$msg_dir=$gvar['l_global']."login.php";
 
-			}if(strcmp($msg_type, "Preguntas sin responder")==0){
+			}else if($msg_type=='Preguntas sin responder'){
 				$msg_icon="warning";
 				$msg_dir="";
 
-			}if(strcmp($msg_type, "Encuesta respondida exitosamente")==0){
+			}else if(strcmp($msg_type, "Encuesta respondida exitosamente")==0){
 				$msg_icon="check-square";
 				$msg_dir=$gvar['l_global']."login.php";
 
@@ -50,9 +50,10 @@
 			$codigo=$this->post->encuesta;
 			unset($this->post->encuesta);
 
-			$options['pregunta']['lvl2']="num_preguntas_by_encuesta";
+			$options['pregunta']['lvl2']="by_encuesta";
 			$cod['pregunta']['encuesta']=$codigo;
-			$numPreguntas =$this->orm->read_data2(array("pregunta"), $options, $cod);
+			$this->orm->read_data(array("pregunta"), $options, $cod);
+			$numPreguntas=$this->orm->get_objects("pregunta", $options,$cod);
 
 			$options['encuesta']['lvl2']="by_codigo";
 			$cod['encuesta']['codigo']=$codigo;
@@ -60,7 +61,7 @@
 			$encuesta=$this->orm->get_objects("encuesta", $options,$cod);
 			$encuesta=new encuesta($encuesta[0]);
 
-			if($numPreguntas[0]==sizeof($this->post)){
+			if(sizeof($numPreguntas)==sizeof($this->post)){
 
 				foreach ($this->post as $key => $value) {
 					$respuesta=new respuesta();
@@ -92,10 +93,10 @@
 				$this->displayMessage('Preguntas sin responder','Por favor seleccione una opción de respuesta para cada una de las preguntas presente en la encuesta');
 				
 				$options['encuesta']['lvl2']="by_codigo";
-				$cod['encuesta']['codigo']=$encuesta;
+				$cod['encuesta']['codigo']=$encuesta->get('codigo');
 
 				$options['pregunta']['lvl2']="by_encuesta";
-				$cod['pregunta']['encuesta']=$encuesta;
+				$cod['pregunta']['encuesta']=$encuesta->get('codigo');
 
 				$options['opcion']['lvl2'] = "all";
 

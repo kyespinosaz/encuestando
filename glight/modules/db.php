@@ -365,11 +365,6 @@ class db
 					$info=$this->get_data("SELECT * FROM pregunta WHERE encuesta=$encuesta;");
 				break;
 
-				case "num_preguntas_by_encuesta":
-					$this->escape_string($data);
-					$encuesta=$data['encuesta'];
-					$info=$this->get_data("SELECT COUNT(encuesta) AS numeroPreguntas FROM pregunta WHERE encuesta=$encuesta");
-				break;
 			}
 			break;	
 
