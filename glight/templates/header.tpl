@@ -7,6 +7,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <meta charset="utf-8" />    
         <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/jsDatePick_ltr.min.css" />
 
         <title>{$title}</title>
 
@@ -27,7 +28,7 @@
                     {if isset($smarty.session.persona) && $smarty.get.option neq 'logout'} 
                         {if $smarty.session.persona.rol == "representante"}
                             <li><a href="{$gvar.l_global}suscribir_empresa.php">Suscribir empresa</a></li>
-                            <li><a href=#>Crear encuesta</a></li>
+                            <li><a href="{$gvar.l_global}crear_encuesta.php">Crear encuesta</a></li>
                             <li><a href=#>Realizar pago</a></li>
                             <li><a href=#>Eliminar producto</a></li>
                             <li><a href=#>Agregar pregunta</a></li>

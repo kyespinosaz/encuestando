@@ -152,6 +152,50 @@ class db
 					break;					
 			}
 			break;
+
+			case "encuesta":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$this->escape_string($object);
+					$nombre=$object->get('nombre');
+					$retribucion=$object->get('retribucion');
+					$fechaPublicacion=$object->get('fechaPublicacion');
+					$fechaFinalizacion=$object->get('fechaFinalizacion');
+					$empresa=$object->get('empresa');
+					$this->do_operation("INSERT INTO encuesta (nombre,retribucion,fechaPublicacion,fechaFinalizacion,empresa) VALUES
+						('$nombre', '$retribucion','$fechaPublicacion', '$fechaFinalizacion', '$empresa');");
+					break;					
+			}
+			break;
+
+			case "pregunta":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$this->escape_string($object);
+					$numero=$object->get('numero');
+					$contenido=$object->get('contenido');
+					$encuesta=$object->get('encuesta');
+					$this->do_operation("INSERT INTO pregunta (numero,contenido,encuesta) VALUES
+						('$numero', '$contenido','$encuesta');");
+					break;					
+			}
+			break;
+
+			case "opcion":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$this->escape_string($object);
+					$numero=$object->get('numero');
+					$contenido=$object->get('contenido');
+					$pregunta=$object->get('pregunta');
+					$this->do_operation("INSERT INTO opcion (numero,contenido,pregunta) VALUES
+						('$numero', '$contenido','$pregunta');");
+					break;					
+			}
+			break;
 			
 			default: break;
 		}
@@ -226,8 +270,7 @@ class db
 	{
 		$info = array();
 		switch($option['lvl1'])
-		{			
-
+		{
 			case "persona":
 			switch($option['lvl2']){
 				case "all": 
@@ -282,6 +325,19 @@ class db
 					$nit=$data['nit'];
 					$info=$this->get_data("SELECT * FROM empresa WHERE nit=$nit;");
 				break;
+
+				case "by_persona":
+					$this->escape_string($data);
+					$persona=$data['persona'];
+					$info=$this->get_data("SELECT e.nit, e.nombre, e.direccion, e.telefono, e.persona FROM empresa e, persona p WHERE p.cedula=e.persona AND e.persona=$persona;");
+				break;
+
+				case "by_persona_nit":
+					$this->escape_string($data);
+					$persona=$data['persona'];
+					$nit=$data['empresa'];
+					$info=$this->get_data("SELECT e.nit, e.nombre, e.direccion, e.telefono, e.persona FROM empresa e, persona p WHERE p.cedula=e.persona AND e.persona=$persona AND e.nit=$nit;");
+				break;
 			}
 			break;
 
@@ -298,6 +354,12 @@ class db
 			switch ($option['lvl2']) {
 				case "all": 
 					$info=$this->get_data("SELECT * FROM encuesta;");
+				break;
+
+				case "by_nombre":
+					$this->escape_string($data);
+					$nombre=$data['nombre']; 
+					$info=$this->get_data("SELECT * FROM encuesta WHERE nombre='$nombre';");
 				break;
 
 				case "by_tipo":
@@ -324,9 +386,53 @@ class db
 					$in="'" . implode("', '", $encuestas) . "'";
 					$info=$this->get_data("SELECT * FROM encuesta WHERE codigo IN ($in);");
 				break;
-				
+
 			}
-			
+
+			case "pregunta":
+			switch ($option['lvl2']) {
+				case 'all':
+						$info=$this->get_data("SELECT * FROM pregunta;");
+				break;
+				
+				case 'by_cod':
+					$this->escape_string($data);
+					$codigo=$data['codigo'];
+					$info=$this->get_data("SELECT * FROM pregunta WHERE codigo='$codigo';");
+				break;
+
+				case 'by_encuesta':
+					$this->escape_string($data);
+					$encuesta=$data['encuesta'];
+					$info=$this->get_data("SELECT * FROM pregunta WHERE encuesta=$encuesta;");
+				break;
+
+				case 'by_encuesta_numero':
+					$this->escape_string($data);
+					$encuesta=$data['encuesta'];
+					$numero=$data['numero'];
+					$info=$this->get_data("SELECT * FROM pregunta WHERE encuesta=$encuesta AND numero=$numero;");
+				break;
+			}
+
+			case "opcion":
+			switch ($option['lvl2']) {
+				case 'all':
+						$info=$this->get_data("SELECT * FROM opcion;");
+				break;
+				
+				case 'by_cod':
+					$this->escape_string($data);
+					$codigo=$data['codigo'];
+					$info=$this->get_data("SELECT * FROM opcion WHERE codigo='$codigo';");
+				break;
+
+				case 'by_pregunta':
+					$this->escape_string($data);
+					$encuesta=$data['pregunta'];
+					$info=$this->get_data("SELECT * FROM opcion WHERE pregunta=$pregunta;");
+				break;
+			}			
 			default: break;
 		}
 		return $info;

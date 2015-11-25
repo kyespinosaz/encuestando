@@ -43,5 +43,26 @@
 			}
 		}
 
+
+		public function validarCompletitud(){				
+				if(is_empty($this->get('nit')) || is_empty($this->get('nombre')) || is_empty($this->get('direccion')) || is_empty($this->get('telefono'))){
+					return false;
+				}
+				return true;
+		}
+
+		public function validarCaracteresNIT(){
+			if (!preg_match('/^[0-9]*$/',$this->get('nit'))){
+					return false;
+			}
+			return true;
+		}
+
+		public function validarCaracteresTelefono(){
+			if (!preg_match('/^[0-9.-]*$/',$this->get('telefono'))){
+					return false;
+			}
+			return true;
+		}
 	}
 ?>

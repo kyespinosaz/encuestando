@@ -1153,9 +1153,20 @@
 
 		#signup-form input[type="text"],
 		#signup-form input[type="password"],
-		#signup-form input[type="email"] {
+		#signup-form input[type="email"],		
+		#signup-form select{
 			width: 18em;
 		}
+		#signup-form td#pregunta{			
+			padding:0 15px 0 0;
+		}
+		
+		#signup-form textarea{
+			width: 18em;
+		}
+		
+		#signup-form input[type="text"]#opcion{text-align: left;}
+		
 
 		#signup-form > * {
 			margin: 0 0 0 1em;
