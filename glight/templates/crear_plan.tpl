@@ -10,7 +10,7 @@
 				required </select>
 			</label>
 			<a class="button" href="{$gvar.l_global}login.php">Atrás</a>
-			<input class="btn btn-primary" type="submit" value="Crear"/>
-			<input class="btn btn-primary" type="reset"  value="Borrar"></center>
+			<input class="button" type="submit" value="Crear"/>
+			<input class="button" type="reset"  value="Borrar"></center>
 
 	</form>

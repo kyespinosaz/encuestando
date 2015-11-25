@@ -16,6 +16,7 @@
 						$msg_type="Plan creado";
 						$msg_content="El plan se ha creado exitosamente en la base de datos";
 						$msg_dir=$gvar['l_global']."login.php";
+						$msg_icon="check-square";
 						$this->engine->assign('msg_dir', $msg_dir);
 						$this->engine->assign('msg_icon', $msg_icon);
 						$this->engine->assign('msg_type', $msg_type);

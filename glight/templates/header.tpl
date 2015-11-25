@@ -44,7 +44,7 @@
                         {/if}
 
                         {if $smarty.session.persona.rol == "administrador"}
-                            <a href="{$gvar.l_global}c_crear_plan.php">Crear plan</a>
+                           <li><a href="{$gvar.l_global}c_crear_plan.php">Crear plan</a></li>
                         {/if}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
