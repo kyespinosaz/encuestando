@@ -40,7 +40,8 @@ class orm
 			$this->numpages["$class[$i]"] = $this->db->numpages;
 		}
 	}
-	
+
+
 	//transform data in respective objects
 	public function get_objects($class, $components = NULL, $auxiliars = NULL)
 	{

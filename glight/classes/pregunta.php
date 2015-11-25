@@ -12,15 +12,13 @@ class pregunta extends object_standard{
 	
 	//auxiliars for primary key and for files
 	var $auxiliars = array();
-
 	//data about the attributes
 	public function metadata(){
 		return array("codigo" => array(), "numero" => array(), 
-			"contenido" => array(),
+			"contenido" => array(), 
 			"encuesta" =>array("foreign_name" => "e_p", 
 			"foreign" => "encuesta", "foreign_attribute" => "codigo")); 
 	}
-
 	public function primary_key(){
 		return array("codigo");
 	}
@@ -33,7 +31,6 @@ class pregunta extends object_standard{
 		    			return array("encuesta");
 		    			break;
 		    	}
-
 		    default:
 			break;
 		}

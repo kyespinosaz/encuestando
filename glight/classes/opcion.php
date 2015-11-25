@@ -12,15 +12,13 @@ class opcion extends object_standard{
 	
 	//auxiliars for primary key and for files
 	var $auxiliars = array();
-
 	//data about the attributes
 	public function metadata(){
 		return array("codigo" => array(), "numero" => array(), 
-			"contenido" => array(),
+			"contenido" => array(), 
 			"pregunta" =>array("foreign_name" => "p_o", 
 			"foreign" => "pregunta", "foreign_attribute" => "codigo")); 
 	}
-
 	public function primary_key(){
 		return array("codigo");
 	}
@@ -33,7 +31,6 @@ class opcion extends object_standard{
 		    			return array("pregunta");
 		    			break;
 		    	}
-
 		    default:
 			break;
 		}

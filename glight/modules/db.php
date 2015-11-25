@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Project:     Framework G - G Light
  * File:        db.php
@@ -12,7 +11,6 @@
  * @author Group Framework G  <info at frameworkg dot com>
  * @version 1.2
  */
-
 class db
 {
     var $server = C_DB_SERVER; //DB server
@@ -98,11 +96,9 @@ class db
 					break;
 			}
 			break;
-
 			case "interes":
 			switch($options['lvl2']){
 				case "normal":
-
 					$this->escape_string($object);
 					$tipo=$object->get('tipo');
 					$persona=$object->get('persona');
@@ -111,11 +107,9 @@ class db
 					break;
 			}
 			break;
-
 			case "categoria":
 			switch($options['lvl2']){
 				case "normal":
-
 					$this->escape_string($object);
 					$tipo=$object->get('tipo');
 					$encuesta=$object->get('encuesta');
@@ -124,7 +118,6 @@ class db
 					break;
 			}
 			break;
-
 			case "plan":
 			switch ($options['lvl2']) {
 				case 'normal':
@@ -137,7 +130,6 @@ class db
 					break;
 			}
 			break;
-
 			case "tarjeta":
 			switch ($options['lvl2']) {
 				case 'normal':
@@ -148,7 +140,6 @@ class db
 					break;
 			}
 			break;
-
 			case "empresa":
 			switch($options['lvl2'])
 			{
@@ -164,7 +155,6 @@ class db
 					break;					
 			}
 			break;
-
 			case "encuesta":
 			switch($options['lvl2'])
 			{
@@ -180,7 +170,6 @@ class db
 					break;					
 			}
 			break;
-
 			case "pregunta":
 			switch($options['lvl2'])
 			{
@@ -194,7 +183,6 @@ class db
 					break;					
 			}
 			break;
-
 			case "opcion":
 			switch($options['lvl2'])
 			{
@@ -208,6 +196,35 @@ class db
 					break;					
 			}
 			break;
+
+
+			case "respuesta":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$this->escape_string($object);
+					$opcion=$object->get('opcion');
+					$usuario=$object->get('usuario');
+					$this->do_operation("INSERT INTO respuesta (opcion, usuario) VALUES
+						('$opcion', '$usuario');");
+				break;					
+			}
+			break;
+			
+			case "beneficio":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$this->escape_string($object);
+					$encuesta=$object->get('encuesta');
+					$tarjeta=$object->get('tarjeta');
+					$fecha=$object->get('fecha');
+					$retribucion=$object->get('retribucion');
+					$this->do_operation("INSERT INTO beneficio (encuesta, tarjeta, fecha, retribucion) VALUES
+						('$encuesta', '$tarjeta', '$fecha', $retribucion);");
+				break;					
+			}
+			break;
 			
 			default: break;
 		}
@@ -218,19 +235,8 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																																		
-			case "user":
-			switch($options['lvl2'])
-			{
-				case "normal":
-					//
-					break;
-			}
-			break;
-
-
 			case "persona":
-			switch($options['lvl2'])
-			{
+			switch($options['lvl2']){
 				case "by_cedula":
 					$this->escape_string($object);					
 					$nombre=$object->get('nombre');
@@ -245,6 +251,18 @@ class db
 					break;
 			}
 			break;
+
+			case "tarjeta":
+			switch($options['lvl2'])
+			{
+				case "saldo":
+						$this->escape_string($object);
+						$persona=$object->get('persona');
+						$saldo=$object->get('saldo');
+						$this->do_operation("UPDATE tarjeta set saldo=$saldo WHERE persona='$persona';");
+				break;
+			}
+			break;
 			
 			default: break;
 		}
@@ -255,13 +273,6 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																												
-			case "user":
-			switch($options['lvl2']){
-				case "one": 
-					break;
-			}
-			break;
-
 			case "interes":
 			switch($options['lvl2'])
 			{
@@ -288,19 +299,16 @@ class db
 				case "all": 
 					$info=$this->get_data("SELECT * FROM persona;");
 				break;
-
 				case "by_cedula":
 					$this->escape_string($data);
 					$cedula=$data['cedula'];
 					$info=$this->get_data("SELECT * FROM persona WHERE cedula=$cedula;");
 				break;
-
 				case "by_name":
 					$this->escape_string($data);
 					$nombre=$data['nombre'];
 					$info=$this->get_data("SELECT * FROM persona WHERE nombre='$nombre';");
 				break;
-
 				case "one_login":
 					$nombre = mysqli_real_escape_string($this->cn, $data['nombre']);
 					$contrasena = $data['contrasena'];
@@ -312,6 +320,15 @@ class db
                 break;
 			}
 			break;
+
+			case "tarjeta":
+			switch ($option['lvl2']) {
+				case 'by_persona':
+						$this->escape_string($data);
+						$persona=$data['persona'];
+						$info=$this->get_data("SELECT * FROM tarjeta WHERE persona=$persona;");
+				break;
+			}
 
 			case "plan":
 			switch ($option['lvl2']) {
@@ -325,25 +342,21 @@ class db
 					$info=$this->get_data("SELECT * FROM plan WHERE nombre='$nombre';");
 				break;
 			}
-
 			case "empresa":
 			switch($option['lvl2']){
 				case "all": 
 					$info=$this->get_data("SELECT * FROM empresa;");
 				break;
-
 				case "by_nit":
 					$this->escape_string($data);
 					$nit=$data['nit'];
 					$info=$this->get_data("SELECT * FROM empresa WHERE nit=$nit;");
 				break;
-
 				case "by_persona":
 					$this->escape_string($data);
 					$persona=$data['persona'];
 					$info=$this->get_data("SELECT e.nit, e.nombre, e.direccion, e.telefono, e.persona FROM empresa e, persona p WHERE p.cedula=e.persona AND e.persona=$persona;");
 				break;
-
 				case "by_persona_nit":
 					$this->escape_string($data);
 					$persona=$data['persona'];
@@ -352,7 +365,6 @@ class db
 				break;
 			}
 			break;
-
 			case "interes":
 			switch($option['lvl2']){
 				case "by_persona":
@@ -361,11 +373,16 @@ class db
 					$info=$this->get_data("SELECT * FROM interes WHERE persona='$persona';");
 				break;
 			}
-
 			case "encuesta":
 			switch ($option['lvl2']) {
 				case "all": 
 					$info=$this->get_data("SELECT * FROM encuesta;");
+				break;
+
+				case "by_codigo":
+					$this->escape_string($data);
+					$codigo=$data['codigo'];
+					$info=$this->get_data("SELECT * FROM encuesta WHERE codigo=$codigo;");
 				break;
 
 				case "by_nombre":
@@ -378,27 +395,35 @@ class db
 					$this->escape_string($data);
 					$tipo=$data['tipo'];
 					settype($tipos, 'array');
-
 					foreach ($tipo as $key => $value) {
 						array_push($tipos, $value->get('tipo'));
 						
 					}
 					$in="'" . implode("', '", $tipos) . "'";
 					$info=$this->get_data("SELECT * FROM categoria WHERE tipo IN ($in);");
-
 					settype($encuestas, 'array');
-
 					foreach ($info as $key => $value) {
 						if(!in_array($value->encuesta, $encuestas)){
 							array_push($encuestas, $value->encuesta);
 						}
 						
 					}
-
 					$in="'" . implode("', '", $encuestas) . "'";
 					$info=$this->get_data("SELECT * FROM encuesta WHERE codigo IN ($in);");
 				break;
 
+				case "by_consulta":
+					$this->escape_string($data);
+					$consulta=$data['consulta'];
+					$trozos=explode(" ",$consulta); 
+   					$numero=count($trozos);
+   					if($numero==1){
+   						$info=$this->get_data("SELECT * FROM encuesta WHERE nombre LIKE '%$consulta%'");
+   					}else{
+   						$info=$this->get_data("SELECT *, MATCH (nombre) AGAINST ('$consulta') AS puntuacion FROM encuesta 
+   							WHERE MATCH (nombre) AGAINST ('$consulta') ORDER BY puntuacion DESC LIMIT 50;");
+   					}
+				break;
 			}
 
 			case "pregunta":
@@ -412,13 +437,11 @@ class db
 					$codigo=$data['codigo'];
 					$info=$this->get_data("SELECT * FROM pregunta WHERE codigo='$codigo';");
 				break;
-
 				case 'by_encuesta':
 					$this->escape_string($data);
 					$encuesta=$data['encuesta'];
 					$info=$this->get_data("SELECT * FROM pregunta WHERE encuesta=$encuesta;");
 				break;
-
 				case 'by_encuesta_numero':
 					$this->escape_string($data);
 					$encuesta=$data['encuesta'];
@@ -444,6 +467,16 @@ class db
 					$encuesta=$data['pregunta'];
 					$info=$this->get_data("SELECT * FROM opcion WHERE pregunta=$pregunta;");
 				break;
+
+				case "beneficio":
+				switch($option['lvl2']){
+					case "by_encuesta":
+						$this->escape_string($data);
+						$encuesta=$data['encuesta'];
+						$info=$this->get_data("SELECT * FROM beneficio WHERE encuesta=$encuesta;");
+					break;
+				}
+				break;
 			}			
 			default: break;
 		}
@@ -457,5 +490,4 @@ class db
 	}
 	
 }
-
 ?>

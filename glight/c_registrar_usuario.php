@@ -34,13 +34,6 @@
 							$this->orm->connect();
 							$this->orm->insert_data("normal", $persona);
 
-
-							settype($tarjeta, 'object');
-							$tarjeta->saldo=0;
-							$tarjeta->persona=$persona->get('cedula');
-							$tarjeta=new tarjeta($tarjeta);
-							$this->orm->insert_data("normal", $tarjeta);
-
 							foreach ($this->post->interes as $key => $value) {
 								settype($interes, 'object');
 								$interes->tipo = $value;
@@ -49,6 +42,12 @@
 								$this->orm->insert_data("normal", $interes);
 								unset($interes);
 							}
+
+							settype($tarjeta, 'object');
+							$tarjeta->saldo=0;
+							$tarjeta->persona=$persona->get('cedula');
+							$tarjeta=new tarjeta($tarjeta);
+							$this->orm->insert_data("normal", $tarjeta);
 
 							$this->displayMessage("Registro completado","El usuario se ha registrado exitosamente en la base de datos");
 							$this->orm->close();
